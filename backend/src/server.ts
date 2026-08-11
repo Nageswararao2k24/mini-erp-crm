@@ -1,0 +1,5 @@
+import express from 'express'; import cors from 'cors'; import dotenv from 'dotenv'; import {errorHandler} from './middleware/error';
+import auth from './modules/auth/routes'; import customers from './modules/customers/routes'; import products from './modules/products/routes'; import challans from './modules/challans/routes'; import invoices from './modules/invoices/routes'; import users from './modules/users/routes'; import dashboard from './modules/dashboard/routes'; import search from './modules/search/routes';
+dotenv.config(); const app=express(); app.use(cors({origin:process.env.FRONTEND_URL?.split(',')||true})); app.use(express.json());
+app.get('/health',(_req,res)=>res.json({ok:true})); app.use('/api/auth',auth); app.use('/api/customers',customers); app.use('/api/products',products); app.use('/api/challans',challans); app.use('/api/invoices',invoices); app.use('/api/users',users); app.use('/api/dashboard',dashboard); app.use('/api/search',search); app.use(errorHandler);
+const port=Number(process.env.PORT||5000); app.listen(port,()=>console.log(`API running on ${port}`));

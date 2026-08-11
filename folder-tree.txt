@@ -1,0 +1,37 @@
+mini-erp-crm/
+├── ARCHITECTURE.md
+├── README.md
+├── .gitignore
+├── backend/
+│   ├── .env.example
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── db/
+│   │   ├── schema.sql
+│   │   └── seed.ts
+│   └── src/
+│       ├── server.ts
+│       ├── config/db.ts
+│       ├── middleware/auth.ts
+│       ├── middleware/error.ts
+│       └── modules/
+│           ├── auth/routes.ts
+│           ├── customers/routes.ts
+│           ├── products/routes.ts
+│           ├── challans/routes.ts
+│           ├── invoices/routes.ts
+│           ├── users/routes.ts
+│           ├── dashboard/routes.ts
+│           └── search/routes.ts
+└── frontend/
+    ├── .env.example
+    ├── index.html
+    ├── package.json
+    ├── tsconfig.json
+    ├── vite.config.ts
+    └── src/
+        ├── main.tsx
+        ├── App.tsx
+        ├── styles.css
+        ├── api/axios.ts
+        └── context/AuthContext.tsx
