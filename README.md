@@ -53,15 +53,22 @@ Set `VITE_API_URL=http://localhost:5000/api` locally.
 4. Root directory: `backend`.
 5. Build command: `npm install && npm run build`.
 6. Start command: `npm start`.
-7. Environment variables: `DATABASE_URL`, `JWT_SECRET`, `FRONTEND_URL`.
-8. Run the seed once with `npm run seed` using the service shell or locally against the same Neon URL.
+7. Environment variables:
+   - `DATABASE_URL` – your Neon Postgres URL.
+   - `JWT_SECRET` – a long random secret for JWT signing.
+   - `FRONTEND_URL` – your deployed frontend origin, e.g. `https://your-app.vercel.app`.
+8. (Optional) Run the seed once with `npm run seed` using the Render shell or locally against the same Neon database.
+9. Health check: `https://<your-backend>.onrender.com/api/health`.
 
 ## Vercel frontend
 1. Import the repository.
 2. Root directory: `frontend`.
 3. Build command: `npm run build`.
 4. Output directory: `dist`.
-5. Set `VITE_API_URL` to your deployed backend API base, e.g. `https://your-api.onrender.com/api`.
+5. Add environment variable:
+   - `VITE_API_URL=https://<your-backend>.onrender.com/api`
+6. If you use a custom domain, set the same custom origin in Render's `FRONTEND_URL`.
+7. Make sure the frontend uses `/api` prefix so requests go to `https://<your-backend>.onrender.com/api/auth/login`, not `https://<your-backend>.onrender.com/auth/login`.
 
 ## Included functionality
 - JWT login and role-aware UI.
