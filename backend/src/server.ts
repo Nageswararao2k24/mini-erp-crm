@@ -8,6 +8,20 @@ if (!process.env.JWT_SECRET) {
   process.env.JWT_SECRET = crypto.randomBytes(64).toString('hex');
   console.warn('⚠️ JWT_SECRET was not set. Generated a temporary secret for this run. Set JWT_SECRET in .env for production.');
 }
-const app=express(); app.use(cors({origin:process.env.FRONTEND_URL?.split(',')||true})); app.use(express.json());
+const app=express();
+const allowedOrigins = process.env.FRONTEND_URL?.split(',').map(u => u.trim()).filter(Boolean) || [];
+const corsOptions = {
+  origin: (origin:any, callback:any) => {
+    if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error(`CORS origin denied: ${origin}`));
+    }
+  },
+  credentials: true,
+};
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
+app.use(express.json());
 app.get('/health',(_req,res)=>res.json({ok:true})); app.get('/api/health',(_req,res)=>res.json({ok:true})); app.use('/api/auth',auth); app.use('/api/customers',customers); app.use('/api/products',products); app.use('/api/challans',challans); app.use('/api/invoices',invoices); app.use('/api/users',users); app.use('/api/dashboard',dashboard); app.use('/api/search',search); app.use(errorHandler);
 const port=Number(process.env.PORT||5000); app.listen(port,()=>console.log(`API running on ${port}`));
